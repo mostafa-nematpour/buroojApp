@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ShowListItemScrollingActivity"
+    tools:showIn="@layout/activity_show_list_item_scrolling">
+
+    <RelativeLayout
+        android:id="@+id/relativeee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_324"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?colorPrimary"
+                android:orientation="horizontal"
+
+                >
+
+                <TextView
+
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:id="@+id/main_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:padding="5dp"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_324"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?colorPrimary"
+                android:orientation="horizontal"
+                android:padding="25dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/fab0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="share"
+                        android:src="@drawable/ic_action_share_w"
+                        app:fab_colorNormal="#F44336"
+                        app:fab_colorPressed="#EF5350"
+                        app:fab_colorRipple="#99FFFFFF"
+                        app:fab_showShadow="false" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/fab1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:onClick="imageShow"
+                        android:src="@drawable/ic_action_image"
+                        app:fab_colorNormal="#C9C9C9"
+                        app:fab_colorPressed="#6F6F6F"
+                        app:fab_colorRipple="#99FFFFFF"
+                        app:fab_showShadow="false" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/fab2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="detail"
+                        android:src="@drawable/ic_action_detail"
+                        app:fab_colorNormal="#4CAF50"
+                        app:fab_colorPressed="#66BB6A"
+                        app:fab_colorRipple="#99FFFFFF"
+                        app:fab_showShadow="false" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    tools:context=".ServisActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ser_text"
+        android:layout_alignParentTop="true"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/ser_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/b_servis"
+        android:gravity="center"/>
+
+    <Button
+        android:transitionName="b"
+
+        android:id="@+id/b_servis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_button_3"
+        android:text="@string/show_image"
+        android:textColor="@color/colorPrimaryDarkDark"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:onClick="showServis"/>
+
+</RelativeLayout>

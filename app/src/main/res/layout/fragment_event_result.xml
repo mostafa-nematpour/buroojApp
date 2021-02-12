@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".event.EventResultFragment"
+    android:background="?android:windowBackground">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="?colorPrimary"
+
+
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ic_check"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-30dp"
+            android:layout_marginBottom="10dp"
+            app:lottie_rawRes="@raw/check"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            />
+
+
+        <TextView
+            android:layout_marginTop="-50dp"
+            android:id="@+id/text_event_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="?android:textColorHighlightInverse"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/text_event_result_titel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/b423"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_button_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/close"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDarkDark"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

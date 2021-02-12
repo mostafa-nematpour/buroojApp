@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">بروج</string>
+    <string name="title_activity_show_list_item_scrolling">تیتر اصلی</string>
+    <string name="action_settings">Settings</string>
+    <string name="getting_user_number_text1">لطفاً شماره‌تلفن خود را وارد کنید.</string>
+    <string name="getting_user_number_text2">به عنوان مثال: 0911***3967</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Open">open</string>
+    <string name="Close">Close</string>
+    <string name="user_name">نام(الزامی):</string>
+    <string name="user_last_name">نام‌خانوادگی:</string>
+    <string name="user_student_number">شماره‌دانشجویی:</string>
+    <string name="aid">تایید</string>
+    <string name="waiting">منتظر بمانید.</string>
+    <string name="event">مراسم‌ها</string>
+    <string name="register">ثبت‌نام</string>
+    <string name="example">مثال: 0912345678</string>
+    <string name="continues">ادامه</string>
+    <string name="user_last_name_2">نام‌خانوادگی:</string>
+    <string name="user_code">کد معرف:</string>
+    <string name="terms_of_service">شرایط استفاده از خدمات را می پذیرم.</string>
+    <string name="servise_name_1">شهیدبهشتی - الغدیر</string>
+    <string name="servise_name_2">شهدبهشتی - پردیس دانشگاه(سرخنکلا)</string>
+    <string name="show_image">مشاهده تصویر</string>
+    <string name="retry">تلاش مجدد</string>
+    <string name="beta">نسخه بتا2</string>
+    <string name="loading">بارگذاری…</string>
+    <string name="account_completion">تکمیل حساب</string>
+    <string name="change_user_profile">تغییر مشخصات</string>
+    <string name="exit_account">خروج از حساب</string>
+    <string name="close">بستن</string>
+    <string name="attend_to_event">شرکت در رویداد</string>
+    <string name="three_points">…</string>
+    <string name="calendar">تقویم</string>
+    <string name="servise">سرویس</string>
+    <string name="educational_calendar">تقویم آموزشی</string>
+    <string name="student_loan">وام دانشجویی</string>
+    <string name="verification_code">کدتایید:</string>
+    <string name="get_code_again">کد را دریافت نکرده‌اید؟ (ارسال دوباره)</string>
+    <string name="setting">تنظیمات</string>
+    <string name="change_deta">  تغییر مشخصات دانشجو  </string>
+    <string name="koroj">خروج از حساب کاربری</string>
+    <string name="update">بروزرسانی نرم‌افزار</string>
+    <string name="agree_terms_privacy">By continuing, you agree to our <a href="http://link1/terms">Terms of Use</a> and read the <a href="http://link1/privacy">Privacy Policy</a></string>
+    <string name="v0">نحوه دریافت وام دانشجویی برای متقاضیان جدید که در سامانه صندوق رفاه پرونده ندارند.\n\n(بر گرفته از سایت دانشگاه)\n\nhttps://gu.ac.ir/student-manage/ContextPage?id=17695</string>
+    <string name="v1">مراجعه به پورتال دانشجویی صندوق رفاه به آدرس http://bp.swf.ir \n\nاز مرورگر internet explorer استفاده شود.</string>
+    <string name="v2">تشکیل پرونده :|</string>
+    <string name="v3">افتتاح حساب در بانک تجارت شعبه دانشگاه ویژه دانشجویان روزانه</string>
+    <string name="v4">تحویل سند تعهد محضری + حکم کارگزینی ضامن + فیش حقوقی ضامن + کپی کارت ملی و شناسنامه ضامن و متقاضی وام به اداره رفاه دانشگاه\n\nلازم بذکر است که ضامن باید کارمند رسمی یا پیمانی دستگاه های دولتی یا نظامی و بازنشسته (در صورت ارائه نامه کسر از حقوق) باشد.</string>
+    <string name="v5">باز پرداخت برای دانشجویان خانم 9 ماه بعد از پایان تحصیل و دانشجویان آقا 2 سال و 9 ماه بعد شروع و در اقساط .6 ماهه میباشد .وام برای دانشجویان روزانه بدون کارمزد  و برای دانشجویان دوره نوبت دوم 4 درصد کارمزد اعمال میشود.</string>
+    <string name="groups">انجمن‌ها</string>
+    <string name="Invite">دعوت دوستان</string>
+
+</resources>
