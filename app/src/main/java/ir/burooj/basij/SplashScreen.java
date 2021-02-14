@@ -51,9 +51,6 @@ public class SplashScreen extends BAppCompatActivity {
     public static final String tokenName = "tokenNameKey";
     public static final String userIdName = "userIdNameKey";
     public static final String haveAccountName = "haveAccount";
-    String token = "", userId = "", haveAccount = "";
-    private String modeD = "white";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +114,12 @@ public class SplashScreen extends BAppCompatActivity {
                         AppDetails appDetails = response.body();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-                        ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreen.this, textViewBurooj, ViewCompat.getTransitionName(textViewBurooj));
+                        ActivityOptionsCompat compat =
+                                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                        SplashScreen.this,
+                                        textViewBurooj,
+                                        ViewCompat.getTransitionName(textViewBurooj)
+                                );
 
                         if (appDetails != null) {
 
@@ -127,7 +129,9 @@ public class SplashScreen extends BAppCompatActivity {
                                 int verCode = pInfo.versionCode;
                                 if (Integer.parseInt(appDetails.getMinVersion()) > verCode) {
                                     intent.putExtra("newVersion", appDetails.getDownloadLink());
-
+                                }
+                                if(Integer.parseInt(appDetails.getCurrentVersion()) > verCode) {
+                                    intent.putExtra("current_version", appDetails.getDownloadLink());
                                 }
                                 // intent.putExtra("newVersion", appDetails.getDownloadLink());
 

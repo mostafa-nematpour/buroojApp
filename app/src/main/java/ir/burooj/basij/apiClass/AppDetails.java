@@ -11,11 +11,15 @@ public class AppDetails {
     private String telegram_link;
     private String week_state;
     private String week_string;
+    private String currentVersion;
 
+
+    public AppDetails() {
+    }
 
     public AppDetails(String isNews, String popupImage, String popupTitle, String popupDesc,
                       String minVersion, String downloadLink, String telegram_link,
-                      String week_state, String week_string) {
+                      String week_state, String week_string, String currentVersion) {
         this.isNews = isNews;
         this.popupImage = popupImage;
         this.popupTitle = popupTitle;
@@ -25,6 +29,15 @@ public class AppDetails {
         this.telegram_link = telegram_link;
         this.week_state = week_state;
         this.week_string = week_string;
+        this.currentVersion = currentVersion;
+    }
+
+    public String getCurrentVersion() {
+        return currentVersion;
+    }
+
+    public void setCurrentVersion(String currentVersion) {
+        this.currentVersion = currentVersion;
     }
 
     public String getTelegram_link() {

@@ -45,7 +45,7 @@ public class AccountFragment extends Fragment {
 
     View view;
     private TextView textViewName, textViewFamily, textViewNumber, textViewTarikh,
-            textViewKhoroj, textViewId, textTotalInvitation, textViewInvite;
+            textViewKSetting, textViewId, textTotalInvitation, textViewInvite;
     private CardView buttonTakmil;
 
     private ImageView imageViewBackground, imageViewLogo;
@@ -78,7 +78,7 @@ public class AccountFragment extends Fragment {
         textViewTarikh = view.findViewById(R.id.textView8);
         imageViewBackground = view.findViewById(R.id.imageView4);
         imageViewLogo = view.findViewById(R.id.imageView2);
-        textViewKhoroj = view.findViewById(R.id.khoroj);
+        textViewKSetting = view.findViewById(R.id.khoroj);
         textViewId = view.findViewById(R.id.textView12);
         buttonTakmil = view.findViewById(R.id.button4);
         textTotalInvitation = view.findViewById(R.id.textTotalInvitation);
@@ -123,13 +123,17 @@ public class AccountFragment extends Fragment {
         */
 
         textViewId.setText("شناسه\u200cکاربری: " + userId);
-        textViewKhoroj.setOnClickListener(new View.OnClickListener() {
+        textViewKSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), SettingActivity.class);
-                ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), textViewKhoroj, ViewCompat.getTransitionName(textViewKhoroj));
+                ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(), textViewKSetting,
+                        ViewCompat.getTransitionName(textViewKSetting)
+                );
                 startActivity(intent);
+                getActivity().finish();
 
             }
         });

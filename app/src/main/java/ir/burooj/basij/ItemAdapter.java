@@ -47,7 +47,7 @@ import retrofit2.Response;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> {
 
 
-    private  List<Item> itemList;
+    private List<Item> itemList;
     private final Context mContext;
     private final String token;
     private final String userId;
@@ -75,7 +75,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
     }
 
 
-
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
@@ -91,14 +90,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
             e.printStackTrace();
         }
         holder.image.setImageResource(R.drawable.defaultpic);
+        int def = R.drawable.defaultpic;
+        try {
+            if (MainActivity.modeD.equals("black")) {
+                def = R.drawable.custom_back_8;
+            }
+        }catch (Exception e){
+
+        }
 
         MainActivity.pica.load(aItem.getImageUrl())
-                .placeholder(R.drawable.defaultpic)
+                .placeholder(def)
                 .error(R.drawable.errorpic)
                 .into(holder.image);
 
-
-        MainActivity.pica.load("https://burooj.ir/"+aItem.getProfile_image_path())
+        MainActivity.pica.load("https://burooj.ir/" + aItem.getProfile_image_path())
                 .placeholder(R.drawable.ic_account_logo)
                 .error(R.drawable.ic_account_logo)
                 .into(holder.logo);
@@ -136,7 +142,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
                 strings[7] = aItem.getLiked();
                 strings[8] = aItem.getLikes();
                 strings[9] = String.valueOf(position);
-                strings[10]=aItem.getWriterId();
+                strings[10] = aItem.getWriterId();
                 intent.putExtra("SData", strings);
                 mContext.startActivity(intent, options.toBundle());
             }
@@ -376,7 +382,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image, like, share,logo;
+        ImageView image, like, share, logo;
         TextView user;
         TextView title;
         TextView description;

@@ -14,31 +14,41 @@
         android:orientation="vertical">
 
         <ImageView
+            android:layout_marginTop="10dp"
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"/>
+            android:fitsSystemWindows="true"
+            android:adjustViewBounds="true" />
 
         <TextView
             android:id="@+id/textView2"
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:padding="10dp"
+            android:textColor="?android:textColorPrimary"
             android:textSize="18sp"
             tools:ignore="RtlHardcoded"
-            android:textColor="?android:textColorPrimary"
 
             />
 
         <TextView
-            android:padding="10dp"
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:gravity="right"
+            android:padding="10dp"
             android:textColor="?android:textColorPrimary"
+
             />
+
+        <Button
+            android:id="@+id/close_d"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="بستن" />
     </LinearLayout>
 
 </RelativeLayout>

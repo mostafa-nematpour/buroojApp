@@ -1,48 +1,30 @@
 package ir.burooj.basij;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.rhexgomez.typer.roboto.TyperRoboto;
 import com.squareup.picasso.OkHttp3Downloader;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.preference.PreferenceManager;
 import android.transition.Fade;
-import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
 import java.util.Objects;
 
 import ir.burooj.basij.apiClass.Like;
@@ -57,7 +39,6 @@ public class ShowListItemScrollingActivity extends BAppCompatActivity {
 
     public static ApiInterface apiInterface;
 
-    boolean flag = false;
     FloatingActionButton fab;
     TextView textView,title;
     String[] SData;
@@ -178,8 +159,9 @@ public class ShowListItemScrollingActivity extends BAppCompatActivity {
             OkHttpClient client = UnsafeOkHttpClient.getUnsafeOkHttpClient();
             OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(client);
 
+
             //added - hamun method ha ruye object p
-            pica.load(SData[0]).placeholder(R.drawable.defaultpic).error(R.drawable.errorpic).into(imageView);
+            pica.load(SData[0]).placeholder(def).error(R.drawable.errorpic).into(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

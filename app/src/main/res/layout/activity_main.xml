@@ -1,33 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:layoutDirection="rtl"
+
     tools:context=".MainActivity">
 
-
-    <FrameLayout
-        android:id="@+id/frg_holder"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/b_nav">
+        android:layout_gravity="center"
+        android:layoutDirection="rtl">
 
-    </FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/update_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/frg_holder"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:visibility="gone"
+            app:cardBackgroundColor="?colorPrimary"
+            app:cardCornerRadius="5dp"
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/b_nav"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+
+                    android:text="نسخه جدید برنامه موجود هست." />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/custom_button_7"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="دانلود" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:id="@+id/frg_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/b_nav">
+
+        </FrameLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/b_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?colorPrimary"
+            android:theme="?theme"
+            app:itemIconTint="@color/nav_color"
+            app:itemTextColor="@color/nav_color"
+
+            app:menu="@menu/bottom_navigation" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?colorPrimary"
-        android:theme="?theme"
-        app:itemIconTint="@color/nav_color"
-        app:itemTextColor="@color/nav_color"
+        android:background="@drawable/custom_back_2"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        app:menu="@menu/bottom_navigation"
-        />
-
-</RelativeLayout>
+        <include layout="@layout/popup_dialog" />
+    </LinearLayout>
+</com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>

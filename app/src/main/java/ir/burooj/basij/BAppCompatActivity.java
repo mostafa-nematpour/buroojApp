@@ -25,6 +25,7 @@ public class BAppCompatActivity extends AppCompatActivity {
     public String modeD = "white";
     private static final String DarkMode = "DarkMode";
     final String MyPref1 = "BuroojSettingPrefersDarkMode";
+    int def = R.drawable.defaultpic;
 
     int placeholder = R.drawable.defaultpic;
 
@@ -41,10 +42,18 @@ public class BAppCompatActivity extends AppCompatActivity {
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         apiInterface = Api.getAPI().create(ApiInterface.class);
         // Toast.makeText(getApplicationContext(),modeD,Toast.LENGTH_LONG).show();
-        //  overridePendingTransition(R.anim.alpha, R.anim.fix_activity);
+//         overridePendingTransition(0, R.anim.slide_up);
 
         if(modeD.equals("black")){
             placeholder=R.drawable.custom_back_8;
+        }
+
+        try {
+            if (MainActivity.modeD.equals("black")) {
+                def = R.drawable.custom_back_8;
+            }
+        }catch (Exception e){
+
         }
     }
 

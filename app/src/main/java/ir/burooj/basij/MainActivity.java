@@ -3,14 +3,14 @@ package ir.burooj.basij;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -20,26 +20,25 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     public static String[] appDetails;
     String[] inData;
     BottomNavigationView bottomNavigationView;
+    LinearLayout sheetLayout;
+    BottomSheetBehavior bottomSheet;
 
     SharedPreferences shPref;
     public static final String MyPref = "BuroojPrefers1";
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String haveAccountName = "haveAccount";
     String token = "", userId = "", haveAccount = "";
 
-    AlertDialog.Builder alertBuilder;
     String appLink = "";
     static String weekState = "", weekString = "";
     static MenuItem menuItem1;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     NotificationManager notifManager;
     String offerChannelId = "Offers";
 
-
+    CardView cardViewUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,38 +142,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void init() {
-        recyclerView = findViewById(R.id.recyclerView);
-        pullToRefresh = findViewById(R.id.pullToRefresh);
-        // progressBarB = (ProgressBar) findViewById(R.id.progressBar4);
-        bottomNavigationView = findViewById(R.id.b_nav);
-
-        apiInterface = Api.getAPI().create(ApiInterface.class);
-
-        OkHttpClient client = UnsafeOkHttpClient.getUnsafeOkHttpClient();
-        OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(client);
-
-        MainActivity.pica = new Picasso.Builder(getApplicationContext()).downloader(okHttp3Downloader).build();
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getStringArray("newDetails") != null) {
-            appDetails = extras.getStringArray("newDetails");
-            showAlertDialog(1);
-        }
-        if (extras != null && extras.getString("newVersion") != null) {
-            appLink = extras.getString("newVersion");
-            showAlertDialog(2);
-        }
-    }
-
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null && extras.getString("current_version") != null) {
+            appLink = extras.getString("current_version");
+            showAlertDialog(3);
+        }
         if (menuItem1 == null) {
             PostFragment postFragment = new PostFragment();
             FragmentManager fm = getSupportFragmentManager();
@@ -181,9 +161,7 @@ public class MainActivity extends AppCompatActivity {
             ft.replace(R.id.frg_holder, postFragment);
             ft.commit();
             bottomNavigationView.setSelectedItemId(R.id.item_1);
-
         }
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -193,11 +171,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     int i = 0;
 
+    @SuppressLint("NonConstantResourceId")
     private boolean fFragment(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -249,79 +227,88 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void init() {
+        recyclerView = findViewById(R.id.recyclerView);
+        pullToRefresh = findViewById(R.id.pullToRefresh);
+        bottomNavigationView = findViewById(R.id.b_nav);
+        sheetLayout = findViewById(R.id.bottom_sheet);
+        bottomSheet = BottomSheetBehavior.from(sheetLayout);
+
+        cardViewUpdate = findViewById(R.id.update_card);
+        apiInterface = Api.getAPI().create(ApiInterface.class);
+
+        OkHttpClient client = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+        OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader(client);
+
+        MainActivity.pica = new Picasso.Builder(getApplicationContext()).downloader(okHttp3Downloader).build();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getStringArray("newDetails") != null) {
+            appDetails = extras.getStringArray("newDetails");
+            showAlertDialog(1);
+        }
+          if (extras != null && extras.getString("newVersion") != null) {
+            appLink = extras.getString("newVersion");
+            showAlertDialog(2);
+        }
+
+
+    }
+
     //برای پاپ آپ
     private void showAlertDialog(int i) {
         if (i == 1) {
             if (appDetails[0].equals("1")) {
-                int h = R.style.DialogTheme;
-                if (modeD.equals("black")) {
-                    h = R.style.DialogThemeDark;
-                }
-                final AlertDialog.Builder dl = new AlertDialog.Builder(MainActivity.this, h);
-                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.popup_dialog, null);
-                dl.setView(dialogView);
-                //dl.setCancelable(false);
-                final ImageView imageView = dialogView.findViewById(R.id.imageView);
-                final TextView textView = dialogView.findViewById(R.id.textView2);
-                final TextView textView3 = dialogView.findViewById(R.id.textView3);
-                Picasso.get().load(appDetails[1]).placeholder(R.drawable.defaultpic)
-                        .error(R.drawable.errorpic).into(imageView);
-                textView.setText(appDetails[2]);
-                textView3.setText(appDetails[3]);
-                dl.setNeutralButton("بستن",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                //
-                final int[] finalHeight = new int[1];
-                final int[] finalWidth = new int[1];
-                ViewTreeObserver vto = imageView.getViewTreeObserver();
-                vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                    public boolean onPreDraw() {
-                        imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        finalHeight[0] = imageView.getMeasuredHeight();
-                        finalWidth[0] = imageView.getMeasuredWidth();
-                        ViewGroup.LayoutParams params = imageView.getLayoutParams();
-                        params.height = (finalWidth[0] / 2);
-                        params.width = finalWidth[0];
-                        imageView.setLayoutParams(params);
-                        return true;
+                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                final ImageView image = findViewById(R.id.imageView);
+                final TextView title = findViewById(R.id.textView2);
+                final TextView dec = findViewById(R.id.textView3);
+                Picasso.get().load(appDetails[1]).placeholder(R.drawable.event_default_loading)
+                        .error(R.drawable.event_default_loading).into(image);
+                title.setText(appDetails[2]);
+                dec.setText(appDetails[3]);
+                Button button = findViewById(R.id.close_d);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     }
                 });
-                //
-                dl.show();
+
             }
         } else if (i == 2) {
 
-            createNotifChannel();
+            cardViewUpdate.setVisibility(View.VISIBLE);
+            cardViewUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), DownloadNewVersion.class));
+                }
+            });
+            cardViewUpdate.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    cardViewUpdate.setVisibility(View.GONE);
+                    return true;
+                }
+            });
+            createNotifyChannel();
             simpleNotification();
 
+        } else if (i == 3) {
 
-            int h = R.style.DialogTheme;
-            if (modeD.equals("black")) {
-                h = R.style.DialogThemeDark;
-            }
-            new AlertDialog.Builder(this, h)
-                    .setTitle("نسخه جدید:")
-                    .setMessage("نسخه ای جدید از بروج آماده دانلود می باشد؛" + "\n" + "جهت دانلود این نسخه اقدام کنید.")
+            new AlertDialog.Builder(this,R.style.DialogTheme)
+                    .setTitle("اخطار")
+                    .setMessage("نسخه فعلی منقضی شده است." + "\n" + "جهت دانلود آخرین نسخه اقدام نمایید.")
                     .setPositiveButton("دانلود", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent i = new Intent(getApplicationContext(), DownloadNewVersion.class);
                             startActivity(i);
                             dialog.dismiss();
-
                         }
                     })
-                    .setNeutralButton("بستن", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .setCancelable(false)
                     .show();
         }
     }
@@ -359,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
         return R.style.AppTheme2; // stub
     }
 
-    private void createNotifChannel() {
+    private void createNotifyChannel() {
         notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

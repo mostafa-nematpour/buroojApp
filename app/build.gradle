@@ -7,8 +7,8 @@ android {
         applicationId "ir.burooj.basij"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.7.0"
+        versionCode 8
+        versionName "1.8.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

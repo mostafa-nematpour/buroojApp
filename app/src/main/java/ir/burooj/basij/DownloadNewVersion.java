@@ -3,6 +3,7 @@ package ir.burooj.basij;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -40,16 +41,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static ir.burooj.basij.MainActivity.modeD;
+import static java.lang.Thread.sleep;
 
 public class DownloadNewVersion extends BAppCompatActivity {
     ProgressBar androidProgressBar;
     int progressStatusCounter = 0;
     Button button;
-    TextView textView, textViewError,textViewD;
+    TextView textView, textViewError, textViewD;
     int progress = 0;
     RelativeLayout relativeLayout;
     AVLoadingIndicatorView progressBarB;
-
+    LottieAnimationView animationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +63,10 @@ public class DownloadNewVersion extends BAppCompatActivity {
         relativeLayout = findViewById(R.id.relative_layout_dnv);
         textViewError = findViewById(R.id.text_dnv);
         progressBarB = findViewById(R.id.avl);
+        animationView = findViewById(R.id.download_animation);
+
         androidProgressBar = (ProgressBar) findViewById(R.id.horizontal_progress_bar);
         runMan();
-
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +89,33 @@ public class DownloadNewVersion extends BAppCompatActivity {
             if (getPackageManager().canRequestPackageInstalls()) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID, new File("/data/data/" + getPackageName() + "/apk/burooj_app.apk"));
-                intent.setDataAndType(uri, MimeTypeMap.getSingleton().getMimeTypeFromExtension("apk"));
+                @SuppressLint("SdCardPath") Uri uri = FileProvider.getUriForFile(
+                        getApplicationContext(),
+                        BuildConfig.APPLICATION_ID,
+                        new File("/data/data/" + getPackageName() + "/apk/burooj_app.apk")
+                );
+                intent.setDataAndType(
+                        uri,
+                        MimeTypeMap.getSingleton().getMimeTypeFromExtension("apk")
+                );
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
             } else {
-                startActivity(new Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:ir.burooj.basij")));
+                startActivity(
+                        new Intent(
+                                android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                                Uri.parse("package:ir.burooj.basij")
+                        )
+                );
             }
         } else {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
-            Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID, new File("/data/data/" + getPackageName() + "/apk/burooj_app.apk"));
+            @SuppressLint("SdCardPath") Uri uri = FileProvider.getUriForFile(
+                    getApplicationContext(),
+                    BuildConfig.APPLICATION_ID,
+                    new File("/data/data/" + getPackageName() + "/apk/burooj_app.apk")
+            );
             intent.setDataAndType(uri, MimeTypeMap.getSingleton().getMimeTypeFromExtension("apk"));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
@@ -129,17 +147,8 @@ public class DownloadNewVersion extends BAppCompatActivity {
                 try {
                     AppDetails appDetails = response.body();
 
-
                     if (appDetails != null) {
-
-                        LottieAnimationView animationView=findViewById(R.id.download_animation);
                         animationView.playAnimation();
-
-                        try {
-                         //   textViewD.setText(BuildConfig.VERSION_NAME+"to"+appDetails);
-                        }catch (Exception e){
-
-                        }
                         try {
                             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                             String version = pInfo.versionName;
@@ -152,7 +161,6 @@ public class DownloadNewVersion extends BAppCompatActivity {
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
                         }
-
 
                     } else {
                         textViewError.setText("مشکلی در ارتباط پیش آمده");
@@ -180,8 +188,6 @@ public class DownloadNewVersion extends BAppCompatActivity {
                         runMan();
                     }
                 });
-
-
             }
         });
     }
@@ -189,7 +195,6 @@ public class DownloadNewVersion extends BAppCompatActivity {
     final String TAG = "downloadNew";
 
     private void download() {
-
         button.setOnClickListener(null);
         Call<ResponseBody> call = MainActivity.apiInterface.downloadBurooj("file/burooj.apk");
         call.enqueue(new Callback<ResponseBody>() {
@@ -197,17 +202,57 @@ public class DownloadNewVersion extends BAppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    animationView.setAnimation(R.raw.download1);
+                    animationView.setFrame(0);
                     Log.d(TAG, "server contacted and has file");
-                    new AsyncTask<Void, Void, Void>() {
-                        @SuppressLint("StaticFieldLeak")
-                        @Override
-                        protected Void doInBackground(Void... voids) {
 
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // do your stuff
                             if (saveToDisk(response.body())) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        install();
+                                        //install();
+                                        animationView.setAnimation(R.raw.download);
+                                        ///animationView.setMinFrame(13);
+                                        animationView.playAnimation();
+                                        animationView.addAnimatorListener(new Animator.AnimatorListener() {
+                                            @Override
+                                            public void onAnimationStart(Animator animation) {
+                                            }
+
+                                            @Override
+                                            public void onAnimationEnd(Animator animation) {
+
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        // do your stuff
+                                                        try {
+                                                            sleep(500);
+                                                        } catch (InterruptedException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                        runOnUiThread(new Runnable() {
+                                                            public void run() {
+                                                                install();
+                                                            }
+                                                        });
+                                                    }
+                                                }).start();
+
+                                            }
+
+                                            @Override
+                                            public void onAnimationCancel(Animator animation) {
+                                            }
+
+                                            @Override
+                                            public void onAnimationRepeat(Animator animation) {
+                                            }
+                                        });
                                         button.setText("نصب");
                                         button.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -215,9 +260,10 @@ public class DownloadNewVersion extends BAppCompatActivity {
                                                 install();
                                             }
                                         });
+
                                     }
                                 });
-                            }else {
+                            } else {
                                 runOnUiThread(new Runnable() {
 
                                     @Override
@@ -233,10 +279,14 @@ public class DownloadNewVersion extends BAppCompatActivity {
                                     }
                                 });
                             }
-                            return null;
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    // do onPostExecute stuff
+                                }
+                            });
                         }
+                    }).start();
 
-                    }.execute();
                 } else {
                     Log.d(TAG, "server contact failed");
                     textView.setText("server contact failed");
@@ -265,6 +315,7 @@ public class DownloadNewVersion extends BAppCompatActivity {
 
 
     public boolean saveToDisk(final ResponseBody body) {
+
         try {
 
             new File("/data/data/" + getPackageName() + "/apk").mkdir();
@@ -289,14 +340,19 @@ public class DownloadNewVersion extends BAppCompatActivity {
                     Log.d(TAG, "Progress: " + progress + "/" + body.contentLength() + " >>>> " + (float) progress / body.contentLength());
 
                     runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void run() {
                             progressStatusCounter = (int) ((progress * 100) / body.contentLength());
                             androidProgressBar.setProgress(progressStatusCounter);
-                            button.setText((progress * 100) / body.contentLength() + " %");
+                            try {
+                                animationView.setFrame(progressStatusCounter * 3);
+                            } catch (Exception e) {
+                            }
                         }
                     });
                 }
+
 
                 os.flush();
 
