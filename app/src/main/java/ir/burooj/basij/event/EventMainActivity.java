@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -28,12 +30,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import ir.burooj.basij.BAppCompatActivity;
 import ir.burooj.basij.CompleteProfileActivity;
 import ir.burooj.basij.ImageZoom;
 import ir.burooj.basij.MainActivity;
 import ir.burooj.basij.R;
 import ir.burooj.basij.SplashScreen;
+import ir.burooj.basij.adapters.MessageAdapter;
 import ir.burooj.basij.apiClass.Event;
 import ir.burooj.basij.apiClass.GetUser;
 import retrofit2.Call;
@@ -43,8 +50,12 @@ import retrofit2.Response;
 public class EventMainActivity extends BAppCompatActivity {
 
     private Event event;
-    private TextView textView, textViewGName, textViewSDate, textViewEDate, textViewDec,
-            textViewStartTime, textViewEndTime;
+    private TextView textViewGName;
+    private TextView textViewSDate;
+    private TextView textViewEDate;
+    private TextView textViewDec;
+    private TextView textViewStartTime;
+    private TextView textViewEndTime;
     private Toolbar toolbar;
     private Button button;
     private ImageView imageView;
@@ -62,7 +73,7 @@ public class EventMainActivity extends BAppCompatActivity {
         } else {
             finish();
         }
-        textView = findViewById(R.id.text_234);
+        TextView textView = findViewById(R.id.text_234);
         textViewGName = findViewById(R.id.text_event_main_g_name);
         toolbar = findViewById(R.id.toolbar_events_main);
         imageView = findViewById(R.id.image_view_event_main);
@@ -122,13 +133,13 @@ public class EventMainActivity extends BAppCompatActivity {
     private void getEvent() {
         button.setOnClickListener(null);
         button.setText("...");
-        final Call<Event> event1 = MainActivity.apiInterface.
+        final Call<Event> event1 = apiInterface.
                 getEvent(userId, token, this.event.getId());
         event1.enqueue(new Callback<Event>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<Event> call,
-                                   Response<Event> response) {
+            public void onResponse(@NotNull Call<Event> call,
+                                   @NotNull Response<Event> response) {
                 if (response.body() != null && response.body().getResponse() != null &&
                         response.body().getResponse().equals("1")) {
 
@@ -145,14 +156,29 @@ public class EventMainActivity extends BAppCompatActivity {
                                 intent.putExtra("qrToken", EventMainActivity.this.event.getTicketToken());
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     ImageView imageView1 = findViewById(R.id.l1221);
-                                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                            EventMainActivity.this, imageView1, ViewCompat.getTransitionName(imageView1));
+                                    ActivityOptionsCompat options =
+                                            ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                            EventMainActivity.this,
+                                            imageView1,
+                                            Objects.requireNonNull(
+                                                    ViewCompat.getTransitionName(imageView1)
+                                            )
+                                    );
                                     startActivity(intent, options.toBundle());
                                 } else {
                                     startActivity(intent);
                                 }
                             }
                         });
+                        if (!Objects.requireNonNull(event.getMessages()).isEmpty()) {
+
+                            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.messag_list);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            MessageAdapter messageAdapter = new MessageAdapter(EventMainActivity.this.event.getMessages());
+                            recyclerView.setAdapter(messageAdapter);
+                            messageAdapter.notifyDataSetChanged();
+                        }
+
                         //   Toast.makeText(getApplicationContext(),events.getTicketToken(),Toast.LENGTH_LONG).show();
                     } else if (EventMainActivity.this.event.getRegistered().equals("0")) {
                         if (event.getPrice().equals("0")) {
@@ -169,8 +195,8 @@ public class EventMainActivity extends BAppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Event> call,
-                                  Throwable t) {
+            public void onFailure(@NotNull Call<Event> call,
+                                  @NotNull Throwable t) {
                 button.setText("مشکلی در اتصال پیش آمده");
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -203,7 +229,7 @@ public class EventMainActivity extends BAppCompatActivity {
         getUserCall.enqueue(new Callback<GetUser>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<GetUser> call, Response<GetUser> response) {
+            public void onResponse(@NotNull Call<GetUser> call, @NotNull Response<GetUser> response) {
                 GetUser user = response.body();
                 if (user != null && user.getResponse() == 1) {
                     if (user.isComplete()) {
@@ -212,8 +238,8 @@ public class EventMainActivity extends BAppCompatActivity {
                                 registerEvent(token, userId, event.getId());
                         call1.enqueue(new Callback<ir.burooj.basij.apiClass.Response>() {
                             @Override
-                            public void onResponse(Call<ir.burooj.basij.apiClass.Response> call,
-                                                   Response<ir.burooj.basij.apiClass.Response> response) {
+                            public void onResponse(@NotNull Call<ir.burooj.basij.apiClass.Response> call,
+                                                   @NotNull Response<ir.burooj.basij.apiClass.Response> response) {
                                 if (response.body() != null) {
                                     ir.burooj.basij.apiClass.Response response1 = response.body();
                                     //  Toast.makeText(getApplicationContext(), "" + response1.getResponse(), Toast.LENGTH_LONG).show();
@@ -226,8 +252,8 @@ public class EventMainActivity extends BAppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<ir.burooj.basij.apiClass.Response> call,
-                                                  Throwable t) {
+                            public void onFailure(@NotNull Call<ir.burooj.basij.apiClass.Response> call,
+                                                  @NotNull Throwable t) {
                                 Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
 
                                 getEvent();
@@ -245,7 +271,7 @@ public class EventMainActivity extends BAppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetUser> call, Throwable t) {
+            public void onFailure(@NotNull Call<GetUser> call, @NotNull Throwable t) {
                 buttonOnClick0("مشکلی در اتصال پیش آمده");
             }
 
@@ -285,7 +311,7 @@ public class EventMainActivity extends BAppCompatActivity {
     private void init() {
         try {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(event.getTitle());
+            Objects.requireNonNull(getSupportActionBar()).setTitle(event.getTitle());
             textView3.setText(event.getTitle());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -320,7 +346,8 @@ public class EventMainActivity extends BAppCompatActivity {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            EventMainActivity.this, imageView, ViewCompat.getTransitionName(imageView));
+                            EventMainActivity.this, imageView,
+                            Objects.requireNonNull(ViewCompat.getTransitionName(imageView)));
                     startActivity(intent, options.toBundle());
                 } else {
                     startActivity(intent);

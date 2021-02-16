@@ -25,14 +25,17 @@
         android:layout_marginTop="200dp"
         android:gravity="center">
 
+
+
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progressBar"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:indeterminateTint="@color/light"
             app:indicatorColor="@color/colorPrimaryDark1"
-            app:indicatorName="BallClipRotatePulseIndicator"
-            tools:ignore="UnusedAttribute" />
+            app:indicatorName="BallPulseIndicator"
+            tools:ignore="UnusedAttribute"
+            />
     </LinearLayout>
 
 

@@ -1,9 +1,13 @@
 package ir.burooj.basij.event;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -28,10 +32,8 @@ import ir.burooj.basij.apiClass.Response;
 public class EventResultFragment extends BottomSheetDialogFragment {
     private Event event;
     private Response response;
-    private TextView textView;
     View view;
     LottieAnimationView imageView;
-    private Button button;
 
     public EventResultFragment() {
     }
@@ -41,14 +43,15 @@ public class EventResultFragment extends BottomSheetDialogFragment {
         this.response = response;
     }
 
-
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         this.view = inflater.inflate(R.layout.fragment_event_result, container, false);
-        textView = view.findViewById(R.id.text_event_result);
+        TextView textView = view.findViewById(R.id.text_event_result);
         imageView = view.findViewById(R.id.ic_check);
-        button = view.findViewById(R.id.b423);
+        Button button = view.findViewById(R.id.b423);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +62,6 @@ public class EventResultFragment extends BottomSheetDialogFragment {
         switch (response.getResponse()) {
             case "1":
                 if (!response.isFree() && response.getPayment_link() != null && !response.getPayment_link().isEmpty()) {
-
-
                     try {
                         imageView.setAnimation(R.raw.link);
                     } catch (Exception ignored) {
@@ -112,7 +113,8 @@ public class EventResultFragment extends BottomSheetDialogFragment {
                 break;
         }
         textView.setText(s);
-
         return view;
     }
+
+
 }

@@ -24,6 +24,8 @@
         <item name="actionMenuTextColor">@color/colorPrimaryDark1</item>
         <item name="color">@color/colorPrimaryDarkDark</item>
 
+        <item name="colorPrimarySurface">@color/colorPrimaryDark1</item>
+
     </style>
 
 
@@ -40,11 +42,10 @@
         <item name="android:textColorPrimary">@color/light</item>
         <item name="android:textColorHighlightInverse">@color/colorAccent_d</item>
 <!--        <item name="android:textColorPrimaryDisableOnly">@color/colorAccent3</item>-->
-        <item name="actionMenuTextColor">@color/colorPrimaryDark1</item>
-        <item name="color">@color/colorPrimaryDark1</item>
-        <item name="android:switchTextOff"></item>
-
+        <item name="actionMenuTextColor">@color/colorPrimaryDark11</item>
+        <item name="color">@color/colorPrimaryDark11</item>
         <item name="actionBarSize">40dp</item>
+        <item name="colorPrimarySurface">@color/colorPrimaryDark1</item>
 
     </style>
 

@@ -2,6 +2,8 @@ package ir.burooj.basij.apiClass;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MessageModel {
     @SerializedName("id")
     private String id;
@@ -29,6 +31,7 @@ public class MessageModel {
         this.text = str;
     }
 
+    @NotNull
     public String toString() {
         return this.id + "\n" + this.text;
     }

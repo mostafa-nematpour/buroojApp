@@ -25,29 +25,25 @@ public class EventsShowSmallFragment extends BottomSheetDialogFragment {
 
     View view;
     private Event event;
-    private TextView textViewTitle, textViewDescription, textViewStartDate, textViewEndDate;
-    private Button button;
 
     public EventsShowSmallFragment() {
         // Required empty public constructor
     }
 
     EventsShowSmallFragment(Event event) {
-
         this.event = event;
     }
-
 
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events_show_small, container, false);
-        textViewTitle = view.findViewById(R.id.title_alert_e);
-        textViewDescription = view.findViewById(R.id.text_alert_event_d);
-        textViewStartDate = view.findViewById(R.id.s_date);
-        textViewEndDate = view.findViewById(R.id.e_date);
-        button = view.findViewById(R.id.button_alert_events);
+        TextView textViewTitle = view.findViewById(R.id.title_alert_e);
+        TextView textViewDescription = view.findViewById(R.id.text_alert_event_d);
+        TextView textViewStartDate = view.findViewById(R.id.s_date);
+        TextView textViewEndDate = view.findViewById(R.id.e_date);
+        Button button = view.findViewById(R.id.button_alert_events);
         textViewTitle.setText(event.getTitle());
         textViewDescription.setText(event.getDescription());
         textViewStartDate.setText("تاریخ شروع: " + event.getStart_date());
@@ -55,10 +51,8 @@ public class EventsShowSmallFragment extends BottomSheetDialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), EventMainActivity.class);
                 startActivity(intent);
-
                 dismiss();
             }
         });

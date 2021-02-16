@@ -43,6 +43,7 @@ public class BAppCompatActivity extends AppCompatActivity {
         apiInterface = Api.getAPI().create(ApiInterface.class);
         // Toast.makeText(getApplicationContext(),modeD,Toast.LENGTH_LONG).show();
 //         overridePendingTransition(0, R.anim.slide_up);
+         overridePendingTransition(0, 0);
 
         if(modeD.equals("black")){
             placeholder=R.drawable.custom_back_8;
@@ -60,7 +61,7 @@ public class BAppCompatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // overridePendingTransition(R.anim.alpha,R.anim.alpha);
+        overridePendingTransition(0,0);
     }
 
     private void loadShared() {
