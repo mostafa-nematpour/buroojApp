@@ -4,17 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wang.avi.AVLoadingIndicatorView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -40,11 +45,8 @@ public class SplashScreen extends BAppCompatActivity {
 
     TextView textViewError, textViewBurooj;
     String stringError = "";
-    boolean flag = true;
-    boolean flag0 = true;
     Button button;
     AVLoadingIndicatorView progressBarB;
-
 
     SharedPreferences shPref;
     public static final String MyPref = "BuroojPrefers1";
@@ -55,7 +57,10 @@ public class SplashScreen extends BAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getAppCounter() == 0) {
+            setAllDefaultTheme();
+        }
+        counterPlus();
         setContentView(R.layout.activity_splash_screen);
         textViewError = findViewById(R.id.text_error);
         textViewBurooj = findViewById(R.id.textView);
@@ -77,6 +82,7 @@ public class SplashScreen extends BAppCompatActivity {
     public void main() {
         boolean b = false;
         shPref = getSharedPreferences(MyPref, Context.MODE_PRIVATE);
+
         //آیا اکانت دارد؟؟؟؟؟؟؟؟
         if (shPref.contains(haveAccountName) && shPref.contains(tokenName)) {
             if (shPref.getString(haveAccountName, "").equals("Yes")) {
@@ -130,7 +136,7 @@ public class SplashScreen extends BAppCompatActivity {
                                 if (Integer.parseInt(appDetails.getMinVersion()) > verCode) {
                                     intent.putExtra("newVersion", appDetails.getDownloadLink());
                                 }
-                                if(Integer.parseInt(appDetails.getCurrentVersion()) > verCode) {
+                                if (Integer.parseInt(appDetails.getCurrentVersion()) > verCode) {
                                     intent.putExtra("current_version", appDetails.getDownloadLink());
                                 }
                                 // intent.putExtra("newVersion", appDetails.getDownloadLink());
@@ -221,5 +227,6 @@ public class SplashScreen extends BAppCompatActivity {
         super.onStart();
         main();
     }
+
 
 }
